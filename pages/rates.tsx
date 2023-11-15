@@ -1,6 +1,6 @@
 import {title, subtitle} from "@/components/primitives";
 import DefaultLayout from "@/layouts/default";
-import {CurrencyExchangeTable} from "@/components/currency-exchange-table";
+import {CurrencyExchangeTable} from "@/components/exchange-table/currency-exchange-table";
 
 export default function RatesPage() {
     return (
