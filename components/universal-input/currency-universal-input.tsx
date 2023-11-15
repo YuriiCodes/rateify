@@ -1,5 +1,6 @@
 import {Input,} from "@nextui-org/react";
 import {CurrencyForInput} from "@/types";
+import {ChangeEvent} from "react";
 
 
 interface CurrencyUniversalInputProps {
@@ -20,14 +21,28 @@ export const CurrencyUniversalInput = ({
                                            onCurrencyChange,
                                            onAmountChange,
                                        }: CurrencyUniversalInputProps) => {
+
+    const handleInputChange= (e:ChangeEvent<any> ) => {
+        const value = e.target.value;
+        console.log(value)
+        if (value === "") {
+            // If the input is empty, update the state with undefined
+            onAmountChange(0);
+            return;
+        }
+        onAmountChange(parseFloat(value));
+    };
+
     return (
         <div>
             <p className="font-bold py-2">{label}</p>
             <div className="flex flex-col md:flex-row gap-5">
                 <Input className={"w-full md:w-3/4"}
                        value={amount?.toString() || ""}
-                       onChange={(e) => onAmountChange(parseFloat(e.target.value))}
-                       label={"Amount"} type="number" placeholder="0.00"/>
+                       onChange={handleInputChange}
+                       label={"Amount"}
+                       step={0.01}
+                       type="number" placeholder="0.00"/>
                 <select
 
                     className="p-3 w-full md:w-1/4"
