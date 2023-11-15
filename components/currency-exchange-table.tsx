@@ -1,19 +1,29 @@
 import {Card, CardBody, CardHeader} from "@nextui-org/card";
-import {Tooltip} from "@nextui-org/react";
 
 import {CurrencyUniversalInput} from "@/components/currency-universal-input";
-import {MdSwapCalls} from "react-icons/md"
 import useSupportedCurrencies from "@/hooks/useSupportedCurrencies";
 import {useMemo, useState} from "react";
 import {mapSupportedCurrencies} from "@/types/typeMappers";
 import useExchangeRates from "@/hooks/useExchageRates";
-
+import _ from 'lodash';
 
 const INIT_BASE_CURR = "USD";
 
 export const CurrencyExchangeTable = () => {
     const [amount, setAmount] = useState<number>(0);
+
+    // we debounce the amount change to avoid unnecessary re-renders while the user is typing.
+    const debouncedSetAmount = useMemo(() => _.debounce(value => setAmount(value), 300), []);
     const [currency, setCurrency] = useState<string>(INIT_BASE_CURR);
+
+    const [inputAmount, setInputAmount] = useState<number>(0); // New state for input value
+
+
+    // Immediate update for input field, delayed update for conversion
+    const handleAmountChange = (value: number) => {
+        setInputAmount(value); // Update input immediately
+        debouncedSetAmount(value); // Debounce for conversion update
+    };
 
 
 
@@ -39,15 +49,6 @@ export const CurrencyExchangeTable = () => {
     const {data: dataRates, isLoading: isLoadingRates, isError: isErrorRates} = useExchangeRates(currency);
 
 
-    function handleAmount1Change(amount: number) {
-        setAmount(amount);
-    }
-
-    function handleCurrency1Change(currency1: string) {
-        setCurrency(currency1);
-    }
-
-
     const conversions = useMemo(() => {
         if (!dataRates) return [];
         return Object.keys(dataRates.rates).map(currency => ({
@@ -71,10 +72,10 @@ export const CurrencyExchangeTable = () => {
             </CardHeader>
             <CardBody className="overflow-visible py-2">
                 <CurrencyUniversalInput
-                    amount={amount}
+                    amount={inputAmount}
                     label={"Currency I want to sell"}
                     currency={currency}
-                    onAmountChange={setAmount}
+                    onAmountChange={handleAmountChange}
                     onCurrencyChange={setCurrency}
                     currencies={supportedCurrencyForInputs}/>
 
