@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
+import {CurrencyExchangeTable} from "@/components/currency-exchange-table";
 
 export default function RatesPage() {
     return (
@@ -20,6 +21,7 @@ export default function RatesPage() {
                         Rates can be found here :)
                     </h4>
                 </div>
+                <CurrencyExchangeTable />
 
             </section>
         </DefaultLayout>
