@@ -1,24 +1,40 @@
-import type { AppProps } from "next/app";
+import type {AppProps} from "next/app";
 
-import { NextUIProvider } from "@nextui-org/react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { fontSans, fontMono } from "@/config/fonts";
+import {NextUIProvider} from "@nextui-org/react";
+import {
+    useQuery,
+    useMutation,
+    useQueryClient,
+    QueryClient,
+    QueryClientProvider,
+} from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
+import {ThemeProvider as NextThemesProvider} from "next-themes";
+import {fontSans, fontMono} from "@/config/fonts";
 import {useRouter} from 'next/router';
+
 import "@/styles/globals.css";
 
-export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
+const queryClient = new QueryClient()
 
-	return (
-		<NextUIProvider navigate={router.push}>
-			<NextThemesProvider>
-				<Component {...pageProps} />
-			</NextThemesProvider>
-		</NextUIProvider>
-	);
+export default function App({Component, pageProps}: AppProps) {
+    const router = useRouter();
+
+    return (
+        <QueryClientProvider client={queryClient}>
+            <NextUIProvider navigate={router.push}>
+                <NextThemesProvider>
+                    <Component {...pageProps} />
+                </NextThemesProvider>
+            </NextUIProvider>
+
+             <ReactQueryDevtools initialIsOpen={false} />
+         </QueryClientProvider>
+    );
 }
 
 export const fonts = {
-	sans: fontSans.style.fontFamily,
-	mono: fontMono.style.fontFamily,
+    sans: fontSans.style.fontFamily,
+    mono: fontMono.style.fontFamily,
 };
