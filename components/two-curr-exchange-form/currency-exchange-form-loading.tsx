@@ -7,6 +7,7 @@ export const CurrencyExchangeFormLoading = () => {
     return (
         <CurrencyExchangeCard>
             <>
+                <div className={"text-sm"}>Loading...</div>
                 <UniversalInputLoading/>
                 <div className={"w-full flex justify-center my-5"}>
                     <MdSwapCalls size={48}/>
