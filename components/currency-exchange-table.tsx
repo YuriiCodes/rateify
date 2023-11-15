@@ -6,6 +6,7 @@ import {useMemo, useState} from "react";
 import {mapSupportedCurrencies} from "@/types/typeMappers";
 import useExchangeRates from "@/hooks/useExchageRates";
 import _ from 'lodash';
+import {getKeyValue, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow} from "@nextui-org/react";
 
 const INIT_BASE_CURR = "USD";
 
@@ -57,6 +58,20 @@ export const CurrencyExchangeTable = () => {
         }));
     }, [amount, dataRates]);
 
+    const columns = [
+        { key: 'currency', label: 'Currency' },
+        { key: 'value', label: 'Value' }
+    ];
+
+    // Prepare rows for the table
+    const rows = useMemo(() => {
+        return conversions.map((conversion, index) => ({
+            key: index, // Unique key for each row
+            currency: conversion.currency,
+            value: conversion.value
+        }));
+    }, [conversions]);
+
 
     if (isLoadingSupCurr) return <div>loading supported currencies...</div>
     if (isErrorSupCurr) return <div>error supported currencies...</div>
@@ -79,17 +94,20 @@ export const CurrencyExchangeTable = () => {
                     onCurrencyChange={setCurrency}
                     currencies={supportedCurrencyForInputs}/>
 
-                <table>
-                    {/* Header */}
-                    <tbody>
-                    {conversions.map(({currency, value}) => (
-                        <tr key={currency}>
-                            <td>{currency}</td>
-                            <td>{value}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                <Table aria-label="Currency Exchange Table">
+                    <TableHeader>
+                        {columns.map((column) =>
+                            <TableColumn key={column.key}>{column.label}</TableColumn>
+                        )}
+                    </TableHeader>
+                    <TableBody>
+                        {rows.map((row) =>
+                            <TableRow key={row.key}>
+                                {(columnKey) => <TableCell>{getKeyValue(row, columnKey)}</TableCell>}
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
             </CardBody>
         </Card>
     )
