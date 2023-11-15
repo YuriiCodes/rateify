@@ -59,37 +59,25 @@ export const CurrencyExchangeForm = () => {
 
 
     function handleAmount1Change(amount1: number) {
-        if (!dataRates) {
-            console.log("dataRates is null")
-            return
-        };
+        if (!dataRates) return;
         setAmount2(roundToFour(amount1 * dataRates.rates[currency2] / dataRates.rates[currency1]));
         setAmount1(amount1);
     }
 
     function handleCurrency1Change(currency1: string) {
-        if (!dataRates) {
-            console.log("dataRates is null")
-            return
-        };
+        if (!dataRates) return;
         setAmount2(roundToFour(amount1 * dataRates.rates[currency2] / dataRates.rates[currency1]));
         setCurrency1(currency1);
     }
 
     function handleAmount2Change(amount2: number) {
-        if (!dataRates) {
-            console.log("dataRates is null")
-            return
-        };
+        if (!dataRates) return;
         setAmount1(roundToFour(amount2 * dataRates.rates[currency1] / dataRates.rates[currency2]));
         setAmount2(amount2);
     }
 
     function handleCurrency2Change(currency2: string) {
-        if (!dataRates) {
-            console.log("dataRates is null")
-            return
-        };
+        if (!dataRates) return;
         setAmount1(roundToFour(amount2 * dataRates.rates[currency1] / dataRates.rates[currency2]));
         setCurrency2(currency2);
     }
@@ -98,14 +86,14 @@ export const CurrencyExchangeForm = () => {
 
 
 
-    if (isLoadingSupCurr) return "loading supported currencies..."
-    if (isErrorSupCurr) return "error supported currencies..."
+    if (isLoadingSupCurr) return <div>loading supported currencies...</div>
+    if (isErrorSupCurr) return <div>error supported currencies...</div>
 
-    if (isLoadingRates) return "loading exchange rates..."
-    if (isErrorRates) return "error exchange rates..."
+    if (isLoadingRates) return <div>loading exchange rates...</div>
+    if (isErrorRates) return <div>error exchange rates...</div>
 
     return (
-        <Card className="py-4 w-1/2 flex">
+        <Card className="py-4 flex w-full">
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-center">
                 <h1 className="text-large uppercase font-bold">Currency Exchange</h1>
                 <small className="text-default-500">Enter the amount and select the currency pair</small>

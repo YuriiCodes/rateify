@@ -23,14 +23,14 @@ export const CurrencyUniversalInput = ({
     return (
         <div>
             <p className="font-bold py-2">{label}</p>
-            <div className="flex flex-row gap-5">
-                <Input className={"w-3/4"}
-                       value={amount.toString()}
+            <div className="flex flex-col md:flex-row gap-5">
+                <Input className={"w-full md:w-3/4"}
+                       value={amount?.toString() || ""}
                        onValueChange={(e) => onAmountChange(parseFloat(e))}
                        label={"Amount"} type="number" placeholder="0.00"/>
                 <select
 
-                    className="w-1/4"
+                    className="p-3 w-full md:w-1/4"
                     value={currency}
                     onChange={(e) => onCurrencyChange(e.target.value as string)}
                 >
