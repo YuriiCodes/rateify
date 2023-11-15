@@ -17,7 +17,7 @@ export default function IndexPage() {
 					</h4>
 				</div>
 
-				<div className="mt-8 w-full flex  justify-center">
+				<div className="mt-8 w-screen md:w-1/2 lg:w-3/4 flex  justify-center">
 					<CurrencyExchangeForm />
 				</div>
 			</section>
