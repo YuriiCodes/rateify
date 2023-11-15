@@ -1,4 +1,5 @@
 import {Card, CardBody, CardHeader} from "@nextui-org/card";
+import React from "react";
 
 export const CurrencyExchangeCard = ({children}: {
     children: React.ReactElement
