@@ -1,13 +1,14 @@
-import {Card, CardBody, CardHeader} from "@nextui-org/card";
 import {Tooltip} from "@nextui-org/react";
 
-import {CurrencyUniversalInput} from "@/components/currency-universal-input";
+import {CurrencyUniversalInput} from "@/components/universal-input/currency-universal-input";
 import {MdSwapCalls} from "react-icons/md"
 import useSupportedCurrencies from "@/hooks/useSupportedCurrencies";
 import {useMemo, useState} from "react";
 import {mapSupportedCurrencies} from "@/types/typeMappers";
 import useExchangeRates from "@/hooks/useExchageRates";
-
+import {CurrencyExchangeCard} from "@/components/currency-exchange-card";
+import {CurrencyExchangeFormLoading} from "@/components/two-curr-exchange-form/currency-exchange-form-loading";
+import {ErrorExchangeCard} from "@/components/error-exchange-card";
 
 
 const DEFAULT_BASE_CURRENCY = "EUR";
@@ -26,18 +27,35 @@ export const CurrencyExchangeForm = () => {
 
 
     // fetching the list of supported currencies
-    const {data: dataSupCurr
-        , isLoading: isLoadingSupCurr, isError: isErrorSupCurr} = useSupportedCurrencies();
+    const {
+        data: dataSupCurr,
+        isLoading: isLoadingSupCurr,
+        isError: isErrorSupCurr,
+        refetch: refetchSupCurr,
+        isFetching: isFetchingSupCurr,
+    } = useSupportedCurrencies();
+
+
+
+    // fetching the exchange rates for base currency
+    const {
+        data: dataRates,
+        isLoading: isLoadingRates,
+        isError: isErrorRates,
+        refetch: refetchRates,
+        isFetching: isFetchingRates,
+    } = useExchangeRates(DEFAULT_BASE_CURRENCY);
+
 
     // useMemo to transform the data only when 'data' changes
     const supportedCurrencyForInputs = useMemo(() => {
         return dataSupCurr ? mapSupportedCurrencies(dataSupCurr) : [];
     }, [dataSupCurr]);
 
-
     function roundToFour(num: number) {
         return Math.round(num * 10000) / 10000;
     }
+
     function handleSwap() {
         // Swap the currencies
         const tempCurrency = currency1;
@@ -51,12 +69,6 @@ export const CurrencyExchangeForm = () => {
         setAmount1(amount2);
         setAmount2(tempAmount);
     }
-
-
-    // fetching the exchange rates for base currency
-    const {data: dataRates, isLoading: isLoadingRates, isError: isErrorRates} = useExchangeRates(DEFAULT_BASE_CURRENCY);
-
-
 
     function handleAmount1Change(amount1: number) {
         if (!dataRates) return;
@@ -83,22 +95,23 @@ export const CurrencyExchangeForm = () => {
     }
 
 
+    if (isLoadingSupCurr || isLoadingRates) return <CurrencyExchangeFormLoading/>
 
+    if (isErrorSupCurr) return <ErrorExchangeCard
+        failedResource={"supported currencies"}
+        refetch={refetchSupCurr}
+        isFetching={isFetchingSupCurr}
+    />
 
+    if (isErrorRates) return  <ErrorExchangeCard
+        failedResource={"rates"}
+        refetch={refetchRates}
+        isFetching={isFetchingRates}
 
-    if (isLoadingSupCurr) return <div>loading supported currencies...</div>
-    if (isErrorSupCurr) return <div>error supported currencies...</div>
-
-    if (isLoadingRates) return <div>loading exchange rates...</div>
-    if (isErrorRates) return <div>error exchange rates...</div>
-
+    />
     return (
-        <Card className="py-4 flex w-full">
-            <CardHeader className="pb-0 pt-2 px-4 flex-col items-center">
-                <h1 className="text-large uppercase font-bold">Currency Exchange</h1>
-                <small className="text-default-500">Enter the amount and select the currency pair</small>
-            </CardHeader>
-            <CardBody className="overflow-visible py-2">
+        <CurrencyExchangeCard>
+            <>
                 <CurrencyUniversalInput
                     amount={amount1}
                     label={"Currency I want to sell"}
@@ -122,7 +135,7 @@ export const CurrencyExchangeForm = () => {
                     currencies={supportedCurrencyForInputs}
 
                 />
-            </CardBody>
-        </Card>
+            </>
+        </CurrencyExchangeCard>
     )
 }

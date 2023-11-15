@@ -26,7 +26,7 @@ export const CurrencyUniversalInput = ({
             <div className="flex flex-col md:flex-row gap-5">
                 <Input className={"w-full md:w-3/4"}
                        value={amount?.toString() || ""}
-                       onValueChange={(e) => onAmountChange(parseFloat(e))}
+                       onChange={(e) => onAmountChange(parseFloat(e.target.value))}
                        label={"Amount"} type="number" placeholder="0.00"/>
                 <select
 

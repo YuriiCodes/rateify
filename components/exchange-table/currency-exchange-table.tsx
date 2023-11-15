@@ -1,6 +1,6 @@
-import {Card, CardBody, CardHeader} from "@nextui-org/card";
+import {Card} from "@nextui-org/card";
 
-import {CurrencyUniversalInput} from "@/components/currency-universal-input";
+import {CurrencyUniversalInput} from "@/components/universal-input/currency-universal-input";
 import useSupportedCurrencies from "@/hooks/useSupportedCurrencies";
 import {useMemo, useState} from "react";
 import {mapSupportedCurrencies} from "@/types/typeMappers";
@@ -10,16 +10,19 @@ import {
     Divider,
     getKeyValue,
     Input,
-    Pagination,
-    Table,
+    Pagination, Table,
     TableBody,
     TableCell,
     TableColumn,
     TableHeader,
     TableRow
 } from "@nextui-org/react";
+import {ErrorExchangeCard} from "@/components/error-exchange-card";
+import {CurrencyExchangeCard} from "@/components/currency-exchange-card";
+import {LoadingExchangeTable} from "@/components/exchange-table/loading-exchange-table";
 
 const INIT_BASE_CURR = "USD";
+
 
 export const CurrencyExchangeTable = () => {
     const [amount, setAmount] = useState<number>(0);
@@ -35,16 +38,6 @@ export const CurrencyExchangeTable = () => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
 
-    const searchInput = (
-        <Input
-            className={"bg-transparent"}
-            isClearable
-            placeholder="Search by currency..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-        />
-    );
-
     // Immediate update for input field, delayed update for conversion
     const handleAmountChange = (value: number) => {
         setInputAmount(value); // Update input immediately
@@ -52,18 +45,27 @@ export const CurrencyExchangeTable = () => {
     };
     // fetching the list of supported currencies
     const {
-        data: dataSupCurr
-        , isLoading: isLoadingSupCurr, isError: isErrorSupCurr
+        data: dataSupCurr,
+        isLoading: isLoadingSupCurr,
+        isError: isErrorSupCurr,
+        refetch: refetchSupCurrencies,
+        isFetching: isFetchingSupCurrencies,
     } = useSupportedCurrencies();
+
+    // fetching the exchange rates for base currency
+    const {
+        data: dataRates,
+        isLoading: isLoadingRates,
+        isError: isErrorRates,
+        refetch: refetchExchangeRate,
+        isFetching: isFetchingExchangeRate,
+    } = useExchangeRates(currency);
+
 
     // useMemo to transform the data only when 'data' changes
     const supportedCurrencyForInputs = useMemo(() => {
         return dataSupCurr ? mapSupportedCurrencies(dataSupCurr) : [];
     }, [dataSupCurr]);
-
-
-    // fetching the exchange rates for base currency
-    const {data: dataRates, isLoading: isLoadingRates, isError: isErrorRates} = useExchangeRates(currency);
 
 
     const conversions = useMemo(() => {
@@ -73,11 +75,6 @@ export const CurrencyExchangeTable = () => {
             value: (amount * dataRates.rates[currency]).toFixed(4),
         }));
     }, [amount, dataRates]);
-
-    const columns = [
-        {key: 'currency', label: 'Currency'},
-        {key: 'value', label: 'Value'}
-    ];
 
 
     const filteredConversions = useMemo(() => {
@@ -91,6 +88,12 @@ export const CurrencyExchangeTable = () => {
         const end = start + rowsPerPage;
         return filteredConversions.slice(start, end);
     }, [filteredConversions, page, rowsPerPage]);
+
+    const columns = [
+        {key: 'currency', label: 'Currency'},
+        {key: 'value', label: 'Value'}
+    ];
+
 
     const rowsPerPageOptions = [5, 10, 15, 20, 100, 500];
     const rowsPerPageSelect = (
@@ -128,39 +131,41 @@ export const CurrencyExchangeTable = () => {
             />
         </div>
     );
-    const classNames = useMemo(
+    const searchInput = (
+        <Input
+            className={"bg-transparent"}
+            isClearable
+            placeholder="Search by currency..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+        />
+    );
+    const tableClassNames = useMemo(
         () => ({
             wrapper: ["border-0", "shadow-none"],
             th: ["bg-transparent", "text-default-500", "border-b", "border-divider"],
-            td: [
-                // changing the rows border radius
-                // first
-                "group-data-[first=true]:first:before:rounded-none",
-                "group-data-[first=true]:last:before:rounded-none",
-                // middle
-                "group-data-[middle=true]:before:rounded-none",
-                // last
-                "group-data-[last=true]:first:before:rounded-none",
-                "group-data-[last=true]:last:before:rounded-none",
-            ],
         }),
         [],
     );
 
-    if (isLoadingSupCurr) return <div>loading supported currencies...</div>
-    if (isErrorSupCurr) return <div>error supported currencies...</div>
 
-    if (isLoadingRates) return <div>loading exchange rates...</div>
-    if (isErrorRates) return <div>error exchange rates...</div>
+
+    // Loading and error states when the data(rates & supported currencies) is being fetched.
+    if (isLoadingSupCurr || isLoadingRates) return <LoadingExchangeTable/>
+    if (isErrorSupCurr) return <ErrorExchangeCard
+        failedResource={"supported currencies"}
+        isFetching={isFetchingSupCurrencies}
+        refetch={refetchSupCurrencies}/>
+
+    if (isErrorRates) return <ErrorExchangeCard
+        failedResource={"rates"}
+        isFetching={isFetchingExchangeRate}
+        refetch={refetchExchangeRate}/>
 
 
     return (
-        <Card className="p-5 w-full flex">
-            <CardHeader className="pb-0 pt-2 px-4 flex-col items-center">
-                <h1 className="text-large uppercase font-bold">Currency Exchange</h1>
-                <small className="text-default-500">Enter the amount and select the currency pair</small>
-            </CardHeader>
-            <CardBody className="overflow-visible py-2 w-full">
+        <CurrencyExchangeCard>
+            <>
                 <CurrencyUniversalInput
                     amount={inputAmount}
                     label={"Currency I want to sell"}
@@ -174,7 +179,7 @@ export const CurrencyExchangeTable = () => {
                     <div className={"w-full md:w-1/4 "}>
                         {searchInput}
                     </div>
-                    <Table aria-label="Currency Exchange Table" classNames={classNames}>
+                    <Table aria-label="Currency Exchange Table" classNames={tableClassNames}>
                         <TableHeader>
                             {columns.map((column) =>
                                 <TableColumn key={column.key}>{column.label}</TableColumn>
@@ -190,7 +195,7 @@ export const CurrencyExchangeTable = () => {
                     </Table>
                     {paginationControls}
                 </Card>
-            </CardBody>
-        </Card>
+            </>
+        </CurrencyExchangeCard>
     )
 }

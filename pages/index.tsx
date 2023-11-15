@@ -1,7 +1,7 @@
 import { title, subtitle } from "@/components/primitives";
 
 import DefaultLayout from "@/layouts/default";
-import {CurrencyExchangeForm} from "@/components/currency-exchange-form";
+import {CurrencyExchangeForm} from "@/components/two-curr-exchange-form/currency-exchange-form";
 
 
 export default function IndexPage() {
