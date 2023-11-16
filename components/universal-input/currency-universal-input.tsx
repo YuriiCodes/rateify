@@ -1,6 +1,7 @@
 import {Input,} from "@nextui-org/react";
 import {CurrencyForInput} from "@/types";
 import {ChangeEvent} from "react";
+import {toast} from "react-toastify";
 
 
 interface CurrencyUniversalInputProps {
@@ -13,6 +14,7 @@ interface CurrencyUniversalInputProps {
     onAmountChange: (amount: number) => void;
 }
 
+const toastLargeValueId = "toast-large-value-id";
 export const CurrencyUniversalInput = ({
                                            currencies,
                                            currency,
@@ -24,10 +26,17 @@ export const CurrencyUniversalInput = ({
 
     const handleInputChange= (e:ChangeEvent<any> ) => {
         const value = e.target.value;
-        console.log(value)
         if (value === "") {
             // If the input is empty, update the state with undefined
             onAmountChange(0);
+            return;
+        }
+        // check the max value:
+        if (value > Number.MAX_SAFE_INTEGER) {
+            toast.error("The value is too big", {
+                // pass the ID to avoid rendering large number of toasts.
+                toastId: toastLargeValueId,
+            })
             return;
         }
         onAmountChange(parseFloat(value));
@@ -42,7 +51,8 @@ export const CurrencyUniversalInput = ({
                        onChange={handleInputChange}
                        label={"Amount"}
                        step={0.01}
-                       type="number" placeholder="0.00"/>
+                       pattern={"[0-9]*"}
+                       type="text" placeholder="0.00"/>
                 <select
 
                     className="p-3 w-full md:w-1/4"

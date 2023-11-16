@@ -2,18 +2,17 @@ import type {AppProps} from "next/app";
 
 import {NextUIProvider} from "@nextui-org/react";
 import {
-    useQuery,
-    useMutation,
-    useQueryClient,
     QueryClient,
     QueryClientProvider,
 } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 
 import {ThemeProvider as NextThemesProvider} from "next-themes";
 import {fontSans, fontMono} from "@/config/fonts";
 import {useRouter} from 'next/router';
 
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "@/styles/globals.css";
 
 const queryClient = new QueryClient()
@@ -29,8 +28,9 @@ export default function App({Component, pageProps}: AppProps) {
                 </NextThemesProvider>
             </NextUIProvider>
 
-             <ReactQueryDevtools initialIsOpen={false} />
-         </QueryClientProvider>
+            <ReactQueryDevtools initialIsOpen={false}/>
+            <ToastContainer/>
+        </QueryClientProvider>
     );
 }
 
