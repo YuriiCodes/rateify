@@ -166,7 +166,7 @@ export const CurrencyExchangeForm = () => {
             <>
                 <CurrencyUniversalInput
                     amount={amount1}
-                    label={"Currency I want to sell"}
+                    label={"Currency I want to sell: "}
                     currency={currency1}
                     onAmountChange={handleAmount1Change}
                     onCurrencyChange={handleCurrency1Change}
@@ -180,7 +180,7 @@ export const CurrencyExchangeForm = () => {
                 </div>
                 <CurrencyUniversalInput
                     amount={amount2}
-                    label={"Currency I want to buy"}
+                    label={"Currency I want to buy: "}
                     currency={currency2}
                     onAmountChange={handleAmount2Change}
                     onCurrencyChange={handleCurrency2Change}
