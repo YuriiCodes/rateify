@@ -13,6 +13,15 @@
     "titleSecond": "Exchange",
     "subHeading": "Please use the form below to exchange currencies"
   },
+  "ratesPage": {
+    "titleFirst": "Rates",
+    "titleSecond": "Table",
+    "subHeading": "A simple table with currency rates and search functionality",
+    "searchPlaceholder": "Search by currency code",
+    "currency": "Currency",
+    "value": "Rate",
+    "recordsPerPage": "Records per page"
+  },
   "currencyExchangeCard": {
     "title": "Currency Exchange",
     "subHeading": "Enter the amount and select the currency pair",

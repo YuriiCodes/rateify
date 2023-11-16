@@ -16,7 +16,11 @@
   "ratesPage": {
     "titleFirst": "Таблиця",
     "titleSecond": "Курсів",
-    "subHeading": "Зручна таблиця курсів валют з пошуком"
+    "subHeading": "Зручна таблиця курсів валют з пошуком",
+    "searchPlaceholder": "Пошук по коду валюти",
+    "currency": "Валюта",
+    "value": "Курс",
+    "recordsPerPage": "Записів на сторінці"
   },
   "currencyExchangeCard": {
     "title": "Конвертація валют",

@@ -2,6 +2,7 @@ import {title, subtitle} from "@/components/primitives";
 import DefaultLayout from "@/layouts/default";
 import {Card, CardBody, CardHeader} from "@nextui-org/card";
 import {Divider, Listbox, ListboxItem} from "@nextui-org/react";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 export default function AboutPage() {
     return (
@@ -39,4 +40,12 @@ export default function AboutPage() {
             </section>
         </DefaultLayout>
     );
+}
+export async function getServerSideProps({ locale }: {locale: string}) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale)),
+            // Will be passed to the page component as props
+        },
+    }
 }
