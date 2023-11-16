@@ -3,12 +3,13 @@ import {Tooltip} from "@nextui-org/react";
 import {CurrencyUniversalInput} from "@/components/universal-input/currency-universal-input";
 import {MdSwapCalls} from "react-icons/md"
 import useSupportedCurrencies from "@/hooks/useSupportedCurrencies";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {mapSupportedCurrencies} from "@/types/typeMappers";
 import useExchangeRates from "@/hooks/useExchageRates";
 import {CurrencyExchangeCard} from "@/components/currency-exchange-card";
 import {CurrencyExchangeFormLoading} from "@/components/two-curr-exchange-form/currency-exchange-form-loading";
 import {ErrorExchangeCard} from "@/components/error-exchange-card";
+import {useRouter} from "next/router";
 
 
 const DEFAULT_BASE_CURRENCY = "EUR";
@@ -16,14 +17,20 @@ const DEFAULT_BASE_CURRENCY = "EUR";
 const INIT_SELL_CURRENCY = "USD";
 const INIT_BUY_CURRENCY = "EUR";
 export const CurrencyExchangeForm = () => {
+    const router = useRouter();
+    const { query } = router;
+    console.log(query)
+    console.log("query.currencyFrom", query.currencyFrom)
+    console.log("query.currencyTo", query.currencyTo)
     // sell, quote currency
     const [amount1, setAmount1] = useState<number>(0);
-    const [currency1, setCurrency1] = useState<string>(INIT_SELL_CURRENCY);
+    const [currency1, setCurrency1] = useState<string>(query.currencyFrom as string || INIT_SELL_CURRENCY);
+    console.log("currency1", currency1)
 
 
     // buy, base currency
     const [amount2, setAmount2] = useState<number>(0);
-    const [currency2, setCurrency2] = useState<string>(INIT_BUY_CURRENCY);
+    const [currency2, setCurrency2] = useState<string>(query.currencyTo as string || INIT_BUY_CURRENCY);
 
 
     // fetching the list of supported currencies
@@ -51,6 +58,16 @@ export const CurrencyExchangeForm = () => {
     const supportedCurrencyForInputs = useMemo(() => {
         return dataSupCurr ? mapSupportedCurrencies(dataSupCurr) : [];
     }, [dataSupCurr]);
+
+    // Sync the query params with the state
+    useEffect(() => {
+        if (query.currencyFrom) {
+            setCurrency1(query.currencyFrom as string);
+        }
+        if (query.currencyTo) {
+            setCurrency2(query.currencyTo as string);
+        }
+    }, [query.currencyFrom, query.currencyTo]);
 
     function roundToFour(num: number) {
         return Math.round(num * 10000) / 10000;
@@ -80,6 +97,7 @@ export const CurrencyExchangeForm = () => {
         if (!dataRates) return;
         setAmount2(roundToFour(amount1 * dataRates.rates[currency2] / dataRates.rates[currency1]));
         setCurrency1(currency1);
+        updateQueryParams(currency1, currency2);
     }
 
     function handleAmount2Change(amount2: number) {
@@ -92,8 +110,16 @@ export const CurrencyExchangeForm = () => {
         if (!dataRates) return;
         setAmount1(roundToFour(amount2 * dataRates.rates[currency1] / dataRates.rates[currency2]));
         setCurrency2(currency2);
+        updateQueryParams(currency1, currency2);
     }
 
+    // Update query params when currencies change
+    const updateQueryParams = (newCurrencyFrom: string, newCurrencyTo: string) => {
+        void router.push({
+            pathname: router.pathname,
+            query: { ...query, currencyFrom: newCurrencyFrom, currencyTo: newCurrencyTo },
+        }, undefined, { shallow: true });
+    };
 
     if (isLoadingSupCurr || isLoadingRates) return <CurrencyExchangeFormLoading/>
 
