@@ -12,9 +12,9 @@ export default function AboutPage() {
                     <h1 className={title({color: "violet"})}>Page&nbsp;</h1>
 
 
-                    <h4 className={subtitle({class: "mt-4"})}>
+                    <h2 className={subtitle({class: "mt-4"})}>
                         We&apos;re simple yet efficient currency converter.
-                    </h4>
+                    </h2>
 
                     <Card>
                         <CardHeader>

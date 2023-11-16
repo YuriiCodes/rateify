@@ -12,9 +12,9 @@ export default function IndexPage() {
 					<h1 className={title()}>Currency &nbsp;</h1>
 					<h1 className={title({ color: "violet" })}>Exchange&nbsp;</h1>
 					<br />
-					<h4 className={subtitle({ class: "mt-4" })}>
+					<h2 className={subtitle({ class: "mt-4" })}>
 						Please use the form below to exchange currencies
-					</h4>
+					</h2>
 				</div>
 
 				<div className="mt-8 w-screen md:w-1/2 lg:w-3/4 flex  justify-center">
