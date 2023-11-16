@@ -11,9 +11,9 @@ export default function RatesPage() {
                     <h1 className={title({color: "violet"})}>Page&nbsp;</h1>
 
 
-                    <h4 className={subtitle({class: "mt-4"})}>
+                    <h2 className={subtitle({class: "mt-4"})}>
                         Rates can be found here :)
-                    </h4>
+                    </h2>
                 </div>
                 <div className={"w-screen md:w-1/2 lg:w-3/4"}>
                     <CurrencyExchangeTable/>
