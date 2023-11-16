@@ -1,0 +1,48 @@
+{
+  "navigation": {
+    "main": "Main",
+    "ratesTable": "Rates Table",
+    "about": "About"
+  },
+  "footer": {
+    "madeWithLove": "Зроблено з любов'ю",
+    "author": "Юрієм Підлісним"
+  },
+  "index": {
+    "titleFirst": "Currency",
+    "titleSecond": "Exchange",
+    "subHeading": "Please use the form below to exchange currencies"
+  },
+  "ratesPage": {
+    "titleFirst": "Rates",
+    "titleSecond": "Table",
+    "subHeading": "A simple table with currency rates and search functionality",
+    "searchPlaceholder": "Search by currency code",
+    "currency": "Currency",
+    "value": "Rate",
+    "recordsPerPage": "Records per page"
+  },
+  "currencyExchangeCard": {
+    "title": "Currency Exchange",
+    "subHeading": "Enter the amount and select the currency pair",
+    "sellCurrencyLabel": "Currency I want to sell",
+    "buyCurrencyLabel": "Currency I want to buy",
+    "amount": "Amount",
+    "swapTooltip": "Swap currencies"
+  },
+  "toasts": {
+    "error": {
+      "valueTooBig": "The value is too big"
+    },
+    "info": {
+      "unsupportedSellCurrency": "That sell currency is not supported. Please select another one.",
+      "unsupportedBuyCurrency": "That buy currency is not supported. Please select another one."
+    }
+  },
+    "aboutPage": {
+        "titleFirst": "About",
+        "titleSecond": "Us",
+        "subHeading": "Rateify is simple yet efficient currency converter.",
+        "techStack": "Tech stack"
+    }
+}

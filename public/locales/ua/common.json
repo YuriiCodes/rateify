@@ -1,0 +1,48 @@
+{
+  "navigation": {
+    "main": "Головна",
+    "ratesTable": "Таблиця курсів",
+    "about": "Про нас"
+  },
+  "footer": {
+    "madeWithLove": "Зроблено з любов'ю",
+    "author": "Юрієм Підлісним"
+  },
+  "index": {
+    "titleFirst": "Конвертація",
+    "titleSecond": "Валют",
+    "subHeading": "Використовуйте форму для обміну валют"
+  },
+  "ratesPage": {
+    "titleFirst": "Таблиця",
+    "titleSecond": "Курсів",
+    "subHeading": "Зручна таблиця курсів валют з пошуком",
+    "searchPlaceholder": "Пошук по коду валюти",
+    "currency": "Валюта",
+    "value": "Курс",
+    "recordsPerPage": "Записів на сторінці"
+  },
+  "currencyExchangeCard": {
+    "title": "Конвертація валют",
+    "subHeading": "Введіть суму та виберіть валюти для обміну",
+    "sellCurrencyLabel": "Валюта, яку я хочу продати",
+    "buyCurrencyLabel": "Валюта, яку я хочу купити",
+    "amount": "Сума",
+    "swapTooltip": "Поміняти валюти місцями"
+  },
+  "toasts": {
+    "error": {
+      "valueTooBig": "Значення занадто велике"
+    },
+    "info": {
+      "unsupportedSellCurrency": "Така валюта для продажу не підтримується. Будь ласка, виберіть іншу.",
+      "unsupportedBuyCurrency": "Така валюта для купівлі не підтримується. Будь ласка, виберіть іншу."
+    }
+  },
+  "aboutPage": {
+    "titleFirst": "Про",
+    "titleSecond": "Нас",
+    "subHeading": "Rateify - це простий, але ефективний конвертер валют.",
+    "techStack": "Використані технології"
+  }
+}
