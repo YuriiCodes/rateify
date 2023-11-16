@@ -10,7 +10,7 @@ interface ErrorExchangeFormProps {
 export const ErrorExchangeCard = ({failedResource, refetch, isFetching}: ErrorExchangeFormProps) => {
     return <CurrencyExchangeCard>
         <div className={"flex flex-col gap-4 w-full my-1"}>
-            <div className={"text-red-500 text-center"}>
+            <div className={"text-red-500 text-center form-error"}>
                 <p>{`Something went wrong during loading ${failedResource}... `}</p>
                 <p>Try again later, or try to refresh</p>
                 <Button onClick={refetch} disabled={isFetching}>

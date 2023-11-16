@@ -35,7 +35,7 @@ export const CurrencyExchangeTable = () => {
     const [inputAmount, setInputAmount] = useState<number>(0);
     const [searchTerm, setSearchTerm] = useState('');
     const [page, setPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
 
     // Immediate update for input field, delayed update for conversion
@@ -98,13 +98,13 @@ export const CurrencyExchangeTable = () => {
     const rowsPerPageOptions = [5, 10, 15, 20, 100, 500];
     const rowsPerPageSelect = (
         <div className="w-full">
-            <label htmlFor="rows-per-page" className={"text-small"}>Per page:</label>
+            <label htmlFor="rows-per-page" className={"text-small"}>:</label>
             <select
                 id="rows-per-page"
                 value={rowsPerPage}
                 onChange={(e) => {
                     setRowsPerPage(Number(e.target.value));
-                    setPage(1); // Reset to first page on rows per page change
+                    setPage(1); // Reset to first page on rows  change
                 }}
             >
                 {rowsPerPageOptions.map(option => (
