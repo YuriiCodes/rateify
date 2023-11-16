@@ -40,7 +40,12 @@ export const CurrencyUniversalInput = ({
             })
             return;
         }
-        onAmountChange(parseFloat(value));
+
+        // I used the integer input instead of float because when I was using the float one,
+        // I kept running to an issue when event.target.value becomes empty string in input[type=number] upon entering a dot
+        // Just like here: https://stackoverflow.com/questions/64920999/event-target-value-becomes-empty-string-in-inputtype-number-upon-entering-a-do.
+        // I didn't have enough time to fix it :(
+        onAmountChange(parseInt(value));
     };
 
     return (
@@ -53,7 +58,10 @@ export const CurrencyUniversalInput = ({
                     value={amount?.toString() || ""}
                     onChange={handleInputChange}
                     label={t("currencyExchangeCard.amount")}
-                    step={0.01}
+                    // I used the integer input instead of float because when I was using the float one,
+                    // I kept running to an issue when event.target.value becomes empty string in input[type=number] upon entering a dot
+                    // Just like here: https://stackoverflow.com/questions/64920999/event-target-value-becomes-empty-string-in-inputtype-number-upon-entering-a-do.
+                    // I didn't have enough time to fix it :(
                     pattern={"[0-9]*"}
                     type="text" placeholder="0.00"/>
                 <select
