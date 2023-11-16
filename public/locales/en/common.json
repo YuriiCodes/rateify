@@ -38,5 +38,11 @@
       "unsupportedSellCurrency": "That sell currency is not supported. Please select another one.",
       "unsupportedBuyCurrency": "That buy currency is not supported. Please select another one."
     }
-  }
+  },
+    "aboutPage": {
+        "titleFirst": "About",
+        "titleSecond": "Us",
+        "subHeading": "Rateify is simple yet efficient currency converter.",
+        "techStack": "Tech stack"
+    }
 }
