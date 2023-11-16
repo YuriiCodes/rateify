@@ -2,7 +2,7 @@ import {Input,} from "@nextui-org/react";
 import {CurrencyForInput} from "@/types";
 import {ChangeEvent, useId} from "react";
 import {toast} from "react-toastify";
-
+import {useTranslation} from "next-i18next";
 
 interface CurrencyUniversalInputProps {
     currencies: string[];
@@ -23,7 +23,7 @@ export const CurrencyUniversalInput = ({
                                            onCurrencyChange,
                                            onAmountChange,
                                        }: CurrencyUniversalInputProps) => {
-
+    const {t} = useTranslation()
     const id = useId()
     const handleInputChange = (e: ChangeEvent<any>) => {
         const value = e.target.value;
@@ -34,13 +34,18 @@ export const CurrencyUniversalInput = ({
         }
         // check the max value:
         if (value > Number.MAX_SAFE_INTEGER) {
-            toast.error("The value is too big", {
+            toast.error(t('toasts.error.valueTooBig'), {
                 // pass the ID to avoid rendering large number of toasts.
                 toastId: toastLargeValueId,
             })
             return;
         }
-        onAmountChange(parseFloat(value));
+
+        // I used the integer input instead of float because when I was using the float one,
+        // I kept running to an issue when event.target.value becomes empty string in input[type=number] upon entering a dot
+        // Just like here: https://stackoverflow.com/questions/64920999/event-target-value-becomes-empty-string-in-inputtype-number-upon-entering-a-do.
+        // I didn't have enough time to fix it :(
+        onAmountChange(parseInt(value));
     };
 
     return (
@@ -52,8 +57,11 @@ export const CurrencyUniversalInput = ({
                     className={"currency-input w-full md:w-3/4"}
                     value={amount?.toString() || ""}
                     onChange={handleInputChange}
-                    label={"Amount"}
-                    step={0.01}
+                    label={t("currencyExchangeCard.amount")}
+                    // I used the integer input instead of float because when I was using the float one,
+                    // I kept running to an issue when event.target.value becomes empty string in input[type=number] upon entering a dot
+                    // Just like here: https://stackoverflow.com/questions/64920999/event-target-value-becomes-empty-string-in-inputtype-number-upon-entering-a-do.
+                    // I didn't have enough time to fix it :(
                     pattern={"[0-9]*"}
                     type="text" placeholder="0.00"/>
                 <select

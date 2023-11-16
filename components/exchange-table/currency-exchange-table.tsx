@@ -20,11 +20,13 @@ import {
 import {ErrorExchangeCard} from "@/components/error-exchange-card";
 import {CurrencyExchangeCard} from "@/components/currency-exchange-card";
 import {LoadingExchangeTable} from "@/components/exchange-table/loading-exchange-table";
+import {useTranslation} from "next-i18next";
 
 const INIT_BASE_CURR = "USD";
 
 
 export const CurrencyExchangeTable = () => {
+    const {t} = useTranslation();
     const [amount, setAmount] = useState<number>(0);
 
     // we debounce the amount change to avoid unnecessary re-renders while the user is typing.
@@ -90,15 +92,15 @@ export const CurrencyExchangeTable = () => {
     }, [filteredConversions, page, rowsPerPage]);
 
     const columns = [
-        {key: 'currency', label: 'Currency'},
-        {key: 'value', label: 'Value'}
+        {key: 'currency', label: t('ratesPage.currency')},
+        {key: 'value', label: t('ratesPage.value')}
     ];
 
 
     const rowsPerPageOptions = [5, 10, 15, 20, 100, 500];
     const rowsPerPageSelect = (
         <div className="w-full">
-            <label htmlFor="rows-per-page" className={"text-small"}>:</label>
+            <label htmlFor="rows-per-page mr-8" className={"text-small"}>{t('ratesPage.recordsPerPage')}: </label>
             <select
                 id="rows-per-page"
                 value={rowsPerPage}
@@ -140,7 +142,7 @@ export const CurrencyExchangeTable = () => {
                 setPage(1);
                 setSearchTerm('');
             }}
-            placeholder="Search by currency..."
+            placeholder={t('ratesPage.searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => {
                 const value = e.target.value;
@@ -178,7 +180,7 @@ export const CurrencyExchangeTable = () => {
             <>
                 <CurrencyUniversalInput
                     amount={inputAmount}
-                    label={"Currency I want to sell"}
+                    label={`${t('currencyExchangeCard.sellCurrencyLabel')}: `}
                     currency={currency}
                     onAmountChange={handleAmountChange}
                     onCurrencyChange={setCurrency}

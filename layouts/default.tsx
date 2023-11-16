@@ -1,12 +1,14 @@
 import { Navbar } from "@/components/navbar";
 import { Link } from "@nextui-org/link";
 import { Head } from "./head";
+import {useTranslation} from "next-i18next";
 
 export default function DefaultLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
+	const {t} = useTranslation();
 	return (
 		<div className="relative flex flex-col h-screen">
 			<Head />
@@ -19,10 +21,10 @@ export default function DefaultLayout({
 					isExternal
 					className="flex items-center gap-1 text-current"
 					href="https://www.linkedin.com/in/yurii-pidlisnyi/"
-					title="Yurii Pidlisnyi"
+					title={t('footer.author')}
 				>
-					<span className="text-default-600">Made with love by</span>
-					<p className="text-primary">Yurii Pidlisnyi</p>
+					<span className="text-default-600">{t('footer.madeWithLove')}</span>
+					<p className="text-primary">{t('footer.author')}</p>
 				</Link>
 			</footer>
 		</div>

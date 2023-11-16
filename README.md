@@ -53,12 +53,6 @@ npm run e2e:headless
 ```
 to run the tests in headless mode.
 
-### Unit Tests
-To run the unit tests, run the following commands in your terminal:
-
-```bash
-npm run test
-```
 
 ### Linting
 To run the linting, run the following commands in your terminal:
