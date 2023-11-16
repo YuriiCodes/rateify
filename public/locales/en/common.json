@@ -1,0 +1,29 @@
+{
+  "navigation": {
+    "main": "Main",
+    "ratesTable": "Rates Table",
+    "about": "About"
+  },
+  "index": {
+    "titleFirst": "Currency",
+    "titleSecond": "Exchange",
+    "subHeading": "Please use the form below to exchange currencies"
+  },
+  "currencyExchangeCard": {
+    "title": "Currency Exchange",
+    "subHeading": "Enter the amount and select the currency pair",
+    "sellCurrencyLabel": "Currency I want to sell",
+    "buyCurrencyLabel": "Currency I want to buy",
+    "amount": "Amount",
+    "swapTooltip": "Swap currencies"
+  },
+  "toasts": {
+    "error": {
+      "valueTooBig": "The value is too big"
+    },
+    "info": {
+      "unsupportedSellCurrency": "That sell currency is not supported. Please select another one.",
+      "unsupportedBuyCurrency": "That buy currency is not supported. Please select another one."
+    }
+  }
+}

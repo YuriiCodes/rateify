@@ -11,6 +11,8 @@ import {CurrencyExchangeFormLoading} from "@/components/two-curr-exchange-form/c
 import {ErrorExchangeCard} from "@/components/error-exchange-card";
 import {useRouter} from "next/router";
 import {toast} from "react-toastify";
+import {useTranslation} from "next-i18next";
+
 
 
 const DEFAULT_BASE_CURRENCY = "EUR";
@@ -21,6 +23,7 @@ const INIT_BUY_CURRENCY = "EUR";
 const fromCurrencyNotSupportedToastId = "from-currency-not-supported-toast-id";
 const toCurrencyNotSupportedToastId = "to-currency-not-supported-toast-id";
 export const CurrencyExchangeForm = () => {
+    const {t} = useTranslation();
     const router = useRouter();
     const {query} = router;
     // sell, quote currency
@@ -162,13 +165,13 @@ export const CurrencyExchangeForm = () => {
             <>
                 <CurrencyUniversalInput
                     amount={amount1}
-                    label={"Currency I want to sell: "}
+                    label={`${t('currencyExchangeCard.sellCurrencyLabel')}:`}
                     currency={currency1}
                     onAmountChange={handleAmount1Change}
                     onCurrencyChange={handleCurrency1Change}
                     currencies={supportedCurrencyForInputs}/>
                 <div className={"w-full flex justify-center my-5"}>
-                    <Tooltip content="Swap currencies">
+                    <Tooltip content={t('currencyExchangeCard.swapTooltip')}>
                         <button onClick={handleSwap} className={"swap-button"}>
                             <MdSwapCalls size={48}/>
                         </button>
@@ -176,7 +179,7 @@ export const CurrencyExchangeForm = () => {
                 </div>
                 <CurrencyUniversalInput
                     amount={amount2}
-                    label={"Currency I want to buy: "}
+                    label={`${t('currencyExchangeCard.buyCurrencyLabel')}:`}
                     currency={currency2}
                     onAmountChange={handleAmount2Change}
                     onCurrencyChange={handleCurrency2Change}

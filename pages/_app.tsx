@@ -14,10 +14,11 @@ import {useRouter} from 'next/router';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "@/styles/globals.css";
+import {appWithTranslation} from "next-i18next";
 
 const queryClient = new QueryClient()
 
-export default function App({Component, pageProps}: AppProps) {
+function App({Component, pageProps}: AppProps) {
     const router = useRouter();
 
     return (
@@ -33,6 +34,8 @@ export default function App({Component, pageProps}: AppProps) {
         </QueryClientProvider>
     );
 }
+
+export default appWithTranslation(App);
 
 export const fonts = {
     sans: fontSans.style.fontFamily,

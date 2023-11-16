@@ -1,0 +1,29 @@
+{
+  "navigation": {
+    "main": "Головна",
+    "ratesTable": "Таблиця курсів",
+    "about": "Про нас"
+  },
+  "index": {
+    "titleFirst": "Конвертація",
+    "titleSecond": "Валют",
+    "subHeading": "Використовуйте форму для обміну валют"
+  },
+  "currencyExchangeCard": {
+    "title": "Конвертація валют",
+    "subHeading": "Введіть суму та виберіть валюти для обміну",
+    "sellCurrencyLabel": "Валюта, яку я хочу продати",
+    "buyCurrencyLabel": "Валюта, яку я хочу купити",
+    "amount": "Сума",
+    "swapTooltip": "Поміняти валюти місцями"
+  },
+  "toasts": {
+    "error": {
+      "valueTooBig": "Значення занадто велике"
+    },
+    "info": {
+      "unsupportedSellCurrency": "Така валюта для продажу не підтримується. Будь ласка, виберіть іншу.",
+      "unsupportedBuyCurrency": "Така валюта для купівлі не підтримується. Будь ласка, виберіть іншу."
+    }
+  }
+}

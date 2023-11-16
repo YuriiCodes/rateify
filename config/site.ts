@@ -1,33 +1,33 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-    name: "A currency conversion app",
+    name: "Rateify",
     description: "Convert currencies with ease; See multiple currencies at once; Get the latest exchange rates.",
     navItems: [
         {
-            label: "Main",
+            key: "main",
             href: "/",
         },
         {
-            label: "Rates Table",
+            key: "ratesTable",
             href: "/rates",
         },
         {
-            label: "About",
+            key: "about",
             href: "/about",
         },
     ],
     navMenuItems: [
         {
-            label: "Main",
+            key: "Main",
             href: "/",
         },
         {
-            label: "Rates Table",
+            key: "ratesTable",
             href: "/rates",
         },
         {
-            label: "About",
+            key: "about",
             href: "/about",
         },
     ],

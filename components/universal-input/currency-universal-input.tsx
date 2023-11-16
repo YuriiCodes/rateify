@@ -2,7 +2,7 @@ import {Input,} from "@nextui-org/react";
 import {CurrencyForInput} from "@/types";
 import {ChangeEvent, useId} from "react";
 import {toast} from "react-toastify";
-
+import {useTranslation} from "next-i18next";
 
 interface CurrencyUniversalInputProps {
     currencies: string[];
@@ -23,7 +23,7 @@ export const CurrencyUniversalInput = ({
                                            onCurrencyChange,
                                            onAmountChange,
                                        }: CurrencyUniversalInputProps) => {
-
+    const {t} = useTranslation()
     const id = useId()
     const handleInputChange = (e: ChangeEvent<any>) => {
         const value = e.target.value;
@@ -34,7 +34,7 @@ export const CurrencyUniversalInput = ({
         }
         // check the max value:
         if (value > Number.MAX_SAFE_INTEGER) {
-            toast.error("The value is too big", {
+            toast.error(t('toasts.error.valueTooBig'), {
                 // pass the ID to avoid rendering large number of toasts.
                 toastId: toastLargeValueId,
             })
@@ -52,7 +52,7 @@ export const CurrencyUniversalInput = ({
                     className={"currency-input w-full md:w-3/4"}
                     value={amount?.toString() || ""}
                     onChange={handleInputChange}
-                    label={"Amount"}
+                    label={t("currencyExchangeCard.amount")}
                     step={0.01}
                     pattern={"[0-9]*"}
                     type="text" placeholder="0.00"/>
