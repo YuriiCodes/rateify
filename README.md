@@ -2,6 +2,8 @@
 
 That is a simple app to exchange rates between currencies. It uses the [Exchange Rates API](https://exchangeratesapi.io) to get the rates.
 
+A deployed version of the app can be found [here](https://rateify.vercel.app/).
+
 ## Technologies Used
 
 - [Next.js 13](https://nextjs.org/docs/getting-started)
