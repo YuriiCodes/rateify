@@ -13,6 +13,11 @@
     "titleSecond": "Валют",
     "subHeading": "Використовуйте форму для обміну валют"
   },
+  "ratesPage": {
+    "titleFirst": "Таблиця",
+    "titleSecond": "Курсів",
+    "subHeading": "Зручна таблиця курсів валют з пошуком"
+  },
   "currencyExchangeCard": {
     "title": "Конвертація валют",
     "subHeading": "Введіть суму та виберіть валюти для обміну",
