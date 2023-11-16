@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-    name: "Next.js + NextUI",
-    description: "Make beautiful websites regardless of your design experience.",
+    name: "A currency conversion app",
+    description: "Convert currencies with ease; See multiple currencies at once; Get the latest exchange rates.",
     navItems: [
         {
             label: "Main",
@@ -33,9 +33,5 @@ export const siteConfig = {
     ],
     links: {
         github: "https://github.com/nextui-org/nextui",
-        twitter: "https://twitter.com/getnextui",
-        docs: "https://nextui-docs-v2.vercel.app",
-        discord: "https://discord.gg/9b6yyZKmH4",
-        sponsor: "https://patreon.com/jrgarciadev"
     },
 };
