@@ -30,9 +30,7 @@ import LanguageSwitcher from "@/components/language-switcher";
 
 export const Navbar = () => {
     const {t} = useTranslation();
-    const searchInput = (
-        <LanguageSwitcher/>
-    );
+
 
     return (
         <NextUINavbar maxWidth="xl" position="sticky">
@@ -65,7 +63,7 @@ export const Navbar = () => {
                 <NavbarItem className="hidden sm:flex gap-2">
                     <ThemeSwitch/>
                 </NavbarItem>
-                <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+                <NavbarItem className="hidden lg:flex"><LanguageSwitcher /></NavbarItem>
 
             </NavbarContent>
 
@@ -78,7 +76,7 @@ export const Navbar = () => {
             </NavbarContent>
 
             <NavbarMenu>
-                {searchInput}
+                <LanguageSwitcher />
                 <div className="mx-4 mt-2 flex flex-col gap-2">
                     {siteConfig.navMenuItems.map((item, index) => (
                         <NavbarMenuItem key={`${item}-${index}`}>
