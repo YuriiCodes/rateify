@@ -1,8 +1,5 @@
 import {
-    Button,
-    Kbd,
     Link,
-    Input,
     Navbar as NextUINavbar,
     NavbarContent,
     NavbarMenu,
@@ -60,7 +57,7 @@ export const Navbar = () => {
                 <NavbarItem className="hidden sm:flex gap-2">
                     <ThemeSwitch/>
                 </NavbarItem>
-                <NavbarItem className="hidden lg:flex"><LanguageSwitcher /></NavbarItem>
+                <NavbarItem className="hidden lg:flex"><LanguageSwitcher/></NavbarItem>
 
             </NavbarContent>
 
@@ -70,7 +67,7 @@ export const Navbar = () => {
             </NavbarContent>
 
             <NavbarMenu>
-                <LanguageSwitcher />
+                <LanguageSwitcher/>
                 <div className="mx-4 mt-2 flex flex-col gap-2">
                     {siteConfig.navMenuItems.map((item, index) => (
                         <NavbarMenuItem key={`${item}-${index}`}>
@@ -79,7 +76,7 @@ export const Navbar = () => {
                                 href={item.href}
                                 size="lg"
                             >
-								{t(`navigation.${item.key}`)}
+                                {t(`navigation.${item.key}`)}
                             </Link>
                         </NavbarMenuItem>
                     ))}

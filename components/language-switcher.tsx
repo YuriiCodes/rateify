@@ -1,5 +1,3 @@
-// components/LanguageSwitcher.jsx
-
 import { useRouter } from 'next/router';
 import {useTranslation} from "next-i18next";
 import {Select, SelectItem} from "@nextui-org/react";

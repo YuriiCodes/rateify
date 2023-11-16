@@ -1,5 +1,4 @@
 import {Input,} from "@nextui-org/react";
-import {CurrencyForInput} from "@/types";
 import {ChangeEvent, useId} from "react";
 import {toast} from "react-toastify";
 import {useTranslation} from "next-i18next";
