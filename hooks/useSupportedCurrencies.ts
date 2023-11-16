@@ -3,6 +3,9 @@ import axios from "axios";
 import { CACHE_TIME, STALE_TIME } from "./cacheSettings";
 import {SupportedCurrenciesResponse} from "@/types";
 
+// we use Next.js API as a proxy to the rate exchange API,
+// instead of calling the API directly from the client.
+// we do this to hide the API key from the client.
 const fetchSupportedCurrencies = async () => {
     const response = await axios.get<SupportedCurrenciesResponse>('/api/supported-currencies', {});
     return response.data;

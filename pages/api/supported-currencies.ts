@@ -4,6 +4,8 @@ import axios from "axios";
 import {SupportedCurrenciesResponse} from "@/types";
 
 
+// we use Next.js API as a proxy to the rate exchange API.
+// we do this to hide the API key from the client.
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<SupportedCurrenciesResponse>
