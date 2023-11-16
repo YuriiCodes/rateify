@@ -118,13 +118,13 @@ export const CurrencyExchangeTable = () => {
 
     const paginationControls = (
         <div
-            className={"flex flex-col gap:4 md:gap-0 md:flex-row align-center justify-between w-full "}>
-            <div className="w-full md:max-w-lg">
+            className={"flex mt-5 h-24 flex-col gap:4 md:gap-0 md:flex-row align-center justify-between w-full "}>
+            <div className="w-full md:max-w-lg self-center">
                 {rowsPerPageSelect}
             </div>
 
             <Pagination
-                className="w-full md:max-w-lg"
+                className="w-full md:max-w-lg flex justify-center self-center"
                 total={Math.ceil(filteredConversions.length / rowsPerPage)}
                 page={page}
                 onChange={setPage}
@@ -135,9 +135,19 @@ export const CurrencyExchangeTable = () => {
         <Input
             className={"bg-transparent"}
             isClearable
+
+            onClear={() => {
+                setPage(1);
+                setSearchTerm('');
+            }}
             placeholder="Search by currency..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+                const value = e.target.value;
+                const filteredValue = value.replace(/[^a-zA-Z]/g, ''); // This line filters out non-letter characters
+                setSearchTerm(filteredValue);
+                setPage(1);
+            }}
         />
     );
     const tableClassNames = useMemo(
