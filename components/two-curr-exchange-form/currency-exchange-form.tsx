@@ -23,13 +23,9 @@ const toCurrencyNotSupportedToastId = "to-currency-not-supported-toast-id";
 export const CurrencyExchangeForm = () => {
     const router = useRouter();
     const {query} = router;
-    console.log(query)
-    console.log("query.currencyFrom", query.currencyFrom)
-    console.log("query.currencyTo", query.currencyTo)
     // sell, quote currency
     const [amount1, setAmount1] = useState<number>(0);
     const [currency1, setCurrency1] = useState<string>(query.currencyFrom as string || INIT_SELL_CURRENCY);
-    console.log("currency1", currency1)
 
 
     // buy, base currency
@@ -173,7 +169,7 @@ export const CurrencyExchangeForm = () => {
                     currencies={supportedCurrencyForInputs}/>
                 <div className={"w-full flex justify-center my-5"}>
                     <Tooltip content="Swap currencies">
-                        <button onClick={handleSwap}>
+                        <button onClick={handleSwap} className={"swap-button"}>
                             <MdSwapCalls size={48}/>
                         </button>
                     </Tooltip>

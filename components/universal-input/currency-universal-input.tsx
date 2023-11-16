@@ -1,6 +1,6 @@
 import {Input,} from "@nextui-org/react";
 import {CurrencyForInput} from "@/types";
-import {ChangeEvent} from "react";
+import {ChangeEvent, useId} from "react";
 import {toast} from "react-toastify";
 
 
@@ -24,7 +24,8 @@ export const CurrencyUniversalInput = ({
                                            onAmountChange,
                                        }: CurrencyUniversalInputProps) => {
 
-    const handleInputChange= (e:ChangeEvent<any> ) => {
+    const id = useId()
+    const handleInputChange = (e: ChangeEvent<any>) => {
         const value = e.target.value;
         if (value === "") {
             // If the input is empty, update the state with undefined
@@ -44,18 +45,19 @@ export const CurrencyUniversalInput = ({
 
     return (
         <div>
-            <p className="font-bold py-2">{label}</p>
+            <label htmlFor={id} className="font-bold py-2">{label}</label>
             <div className="flex flex-col md:flex-row gap-5">
-                <Input className={"w-full md:w-3/4"}
-                       value={amount?.toString() || ""}
-                       onChange={handleInputChange}
-                       label={"Amount"}
-                       step={0.01}
-                       pattern={"[0-9]*"}
-                       type="text" placeholder="0.00"/>
+                <Input
+                    id={id}
+                    className={"currency-input w-full md:w-3/4"}
+                    value={amount?.toString() || ""}
+                    onChange={handleInputChange}
+                    label={"Amount"}
+                    step={0.01}
+                    pattern={"[0-9]*"}
+                    type="text" placeholder="0.00"/>
                 <select
-
-                    className="p-3 w-full md:w-1/4"
+                    className="currency-select p-3 w-full md:w-1/4"
                     value={currency}
                     onChange={(e) => onCurrencyChange(e.target.value as string)}
                 >

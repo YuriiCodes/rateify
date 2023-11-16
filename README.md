@@ -1,11 +1,14 @@
-# Next.js & NextUI Template
+# Rateify
 
-This is a template for creating applications using Next.js 13 (pages directory) and NextUI (v2).
+That is a simple app to exchange rates between currencies. It uses the [Exchange Rates API](https://exchangeratesapi.io) to get the rates.
+
+A deployed version of the app can be found [here](https://rateify.vercel.app/).
 
 ## Technologies Used
 
 - [Next.js 13](https://nextjs.org/docs/getting-started)
 - [NextUI](https://nextui.org)
+- [TanStack Query](https://tanstack.com/query/latest)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Tailwind Variants](https://tailwind-variants.org)
 - [TypeScript](https://www.typescriptlang.org)
@@ -13,12 +16,53 @@ This is a template for creating applications using Next.js 13 (pages directory) 
 - [next-themes](https://github.com/pacocoursey/next-themes)
 
 ## How to Use
-
-To create a new project based on this template using `create-next-app`, run the following command:
+### App
+To launch the app locally, run the following commands in your terminal:
 
 ```bash
-npx create-next-app -e https://github.com/nextui-org/next-pages-template
+npm install
 ```
-## License
 
-Licensed under the [MIT license](https://github.com/nextui-org/next-pages-template/blob/main/LICENSE).
+create a `.env` file in the root of the project and paste your API key like this:
+
+```
+RATE_EXCHANGE_API_KEY=YOUR_API_KEY
+```
+Also add the `RATE_EXCHANGE_BACKEND_BASIC_URL` variable to the `.env` file:
+```
+RATE_EXCHANGE_BACKEND_BASIC_URL=https://api.exchangeratesapi.io/v1
+```
+A detailed example of the `.env` file can be found in the `.env.example` file.
+
+
+then run the following command in your terminal:
+
+```bash
+npm run dev
+```
+
+### E2E Cypress Tests
+To run the E2E Cypress tests, run the following commands in your terminal:
+
+```bash
+npm run e2e
+```
+or
+```bash
+npm run e2e:headless
+```
+to run the tests in headless mode.
+
+### Unit Tests
+To run the unit tests, run the following commands in your terminal:
+
+```bash
+npm run test
+```
+
+### Linting
+To run the linting, run the following commands in your terminal:
+
+```bash
+npm run lint
+```
