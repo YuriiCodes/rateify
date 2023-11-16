@@ -5,7 +5,7 @@ import {toast} from "react-toastify";
 
 
 interface CurrencyUniversalInputProps {
-    currencies: CurrencyForInput[];
+    currencies: string[];
     currency: string;
     amount: number;
     label: string;
@@ -60,8 +60,8 @@ export const CurrencyUniversalInput = ({
                     onChange={(e) => onCurrencyChange(e.target.value as string)}
                 >
                     {currencies.map((currency) => (
-                        <option key={currency.value} value={currency.value}>
-                            {currency.label}
+                        <option key={currency} value={currency}>
+                            {currency}
                         </option>
                     ))}
                 </select>

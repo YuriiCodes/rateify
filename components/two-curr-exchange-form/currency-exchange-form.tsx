@@ -10,15 +10,19 @@ import {CurrencyExchangeCard} from "@/components/currency-exchange-card";
 import {CurrencyExchangeFormLoading} from "@/components/two-curr-exchange-form/currency-exchange-form-loading";
 import {ErrorExchangeCard} from "@/components/error-exchange-card";
 import {useRouter} from "next/router";
+import {toast} from "react-toastify";
 
 
 const DEFAULT_BASE_CURRENCY = "EUR";
 
 const INIT_SELL_CURRENCY = "USD";
 const INIT_BUY_CURRENCY = "EUR";
+
+const fromCurrencyNotSupportedToastId = "from-currency-not-supported-toast-id";
+const toCurrencyNotSupportedToastId = "to-currency-not-supported-toast-id";
 export const CurrencyExchangeForm = () => {
     const router = useRouter();
-    const { query } = router;
+    const {query} = router;
     console.log(query)
     console.log("query.currencyFrom", query.currencyFrom)
     console.log("query.currencyTo", query.currencyTo)
@@ -43,7 +47,6 @@ export const CurrencyExchangeForm = () => {
     } = useSupportedCurrencies();
 
 
-
     // fetching the exchange rates for base currency
     const {
         data: dataRates,
@@ -59,15 +62,38 @@ export const CurrencyExchangeForm = () => {
         return dataSupCurr ? mapSupportedCurrencies(dataSupCurr) : [];
     }, [dataSupCurr]);
 
+
+    const isCurrencySupported = (currencies: string[], currency: string) => {
+        return currencies.length > 0 && currencies.includes(currency);
+    }
+
     // Sync the query params with the state
     useEffect(() => {
+        if(isLoadingSupCurr) return;
+
         if (query.currencyFrom) {
+            if (!isCurrencySupported(supportedCurrencyForInputs, query.currencyFrom as string)) {
+                console.log("supportedCurrencyForInputs", supportedCurrencyForInputs);
+                console.log("query.currencyFrom", query.currencyFrom);
+                setCurrency1(INIT_SELL_CURRENCY);
+                toast.info(`That sell currency is not supported. We automatically changed it to ${INIT_SELL_CURRENCY}. Please select another one.`, {
+                    toastId: fromCurrencyNotSupportedToastId,
+                })
+                return
+            }
             setCurrency1(query.currencyFrom as string);
         }
         if (query.currencyTo) {
+            if (!isCurrencySupported(supportedCurrencyForInputs, query.currencyTo as string)) {
+                setCurrency2(INIT_BUY_CURRENCY);
+                toast.info(`That buy currency is not supported. We automatically changed it to ${INIT_BUY_CURRENCY}. Please select another one.`, {
+                    toastId: toCurrencyNotSupportedToastId,
+                })
+                return
+            }
             setCurrency2(query.currencyTo as string);
         }
-    }, [query.currencyFrom, query.currencyTo]);
+    }, [query.currencyFrom, query.currencyTo, supportedCurrencyForInputs, isLoadingSupCurr]);
 
     function roundToFour(num: number) {
         return Math.round(num * 10000) / 10000;
@@ -117,8 +143,8 @@ export const CurrencyExchangeForm = () => {
     const updateQueryParams = (newCurrencyFrom: string, newCurrencyTo: string) => {
         void router.push({
             pathname: router.pathname,
-            query: { ...query, currencyFrom: newCurrencyFrom, currencyTo: newCurrencyTo },
-        }, undefined, { shallow: true });
+            query: {...query, currencyFrom: newCurrencyFrom, currencyTo: newCurrencyTo},
+        }, undefined, {shallow: true});
     };
 
     if (isLoadingSupCurr || isLoadingRates) return <CurrencyExchangeFormLoading/>
@@ -129,7 +155,7 @@ export const CurrencyExchangeForm = () => {
         isFetching={isFetchingSupCurr}
     />
 
-    if (isErrorRates) return  <ErrorExchangeCard
+    if (isErrorRates) return <ErrorExchangeCard
         failedResource={"rates"}
         refetch={refetchRates}
         isFetching={isFetchingRates}
