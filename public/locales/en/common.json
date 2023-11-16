@@ -4,6 +4,10 @@
     "ratesTable": "Rates Table",
     "about": "About"
   },
+  "footer": {
+    "madeWithLove": "Зроблено з любов'ю",
+    "author": "Юрієм Підлісним"
+  },
   "index": {
     "titleFirst": "Currency",
     "titleSecond": "Exchange",

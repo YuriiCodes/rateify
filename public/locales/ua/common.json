@@ -4,6 +4,10 @@
     "ratesTable": "Таблиця курсів",
     "about": "Про нас"
   },
+  "footer": {
+    "madeWithLove": "Зроблено з любов'ю",
+    "author": "Юрієм Підлісним"
+  },
   "index": {
     "titleFirst": "Конвертація",
     "titleSecond": "Валют",
