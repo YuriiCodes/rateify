@@ -20,7 +20,7 @@ export default function LanguageSwitcher() {
         )
     }
     return (
-        <div className="w-40">
+        <div className="w-full md:w-40">
             <Select
                 value={i18n.language}
                 onChange={handleLocaleChange}

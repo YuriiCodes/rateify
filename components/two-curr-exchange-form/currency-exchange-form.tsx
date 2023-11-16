@@ -27,13 +27,13 @@ export const CurrencyExchangeForm = () => {
     const router = useRouter();
     const {query} = router;
     // sell, quote currency
-    const [amount1, setAmount1] = useState<number>(0);
-    const [currency1, setCurrency1] = useState<string>(query.currencyFrom as string || INIT_SELL_CURRENCY);
+    const [amountCurrencyToSell, setAmountCurrencyToSell] = useState<number>(0);
+    const [currencyToSell, setCurrencyToSell] = useState<string>(query.currencyFrom as string || INIT_SELL_CURRENCY);
 
 
     // buy, base currency
-    const [amount2, setAmount2] = useState<number>(0);
-    const [currency2, setCurrency2] = useState<string>(query.currencyTo as string || INIT_BUY_CURRENCY);
+    const [amountCurrencyToBuy, setAmountCurrencyToBuy] = useState<number>(0);
+    const [currencyToBuy, setCurrencyToBuy] = useState<string>(query.currencyTo as string || INIT_BUY_CURRENCY);
 
 
     // fetching the list of supported currencies
@@ -74,23 +74,23 @@ export const CurrencyExchangeForm = () => {
             if (!isCurrencySupported(supportedCurrencyForInputs, query.currencyFrom as string)) {
                 console.log("supportedCurrencyForInputs", supportedCurrencyForInputs);
                 console.log("query.currencyFrom", query.currencyFrom);
-                setCurrency1(INIT_SELL_CURRENCY);
+                setCurrencyToSell(INIT_SELL_CURRENCY);
                 toast.info(t('toasts.info.unsupportedSellCurrency'), {
                     toastId: fromCurrencyNotSupportedToastId,
                 })
                 return
             }
-            setCurrency1(query.currencyFrom as string);
+            setCurrencyToSell(query.currencyFrom as string);
         }
         if (query.currencyTo) {
             if (!isCurrencySupported(supportedCurrencyForInputs, query.currencyTo as string)) {
-                setCurrency2(INIT_BUY_CURRENCY);
+                setCurrencyToBuy(INIT_BUY_CURRENCY);
                 toast.info(t('toasts.info.unsupportedBuyCurrency'), {
                     toastId: toCurrencyNotSupportedToastId,
                 })
                 return
             }
-            setCurrency2(query.currencyTo as string);
+            setCurrencyToBuy(query.currencyTo as string);
         }
     }, [query.currencyFrom, query.currencyTo, supportedCurrencyForInputs, isLoadingSupCurr]);
 
@@ -100,42 +100,42 @@ export const CurrencyExchangeForm = () => {
 
     function handleSwap() {
         // Swap the currencies
-        const tempCurrency = currency1;
-        setCurrency1(currency2);
-        setCurrency2(tempCurrency);
+        const tempCurrency = currencyToSell;
+        setCurrencyToSell(currencyToBuy);
+        setCurrencyToBuy(tempCurrency);
 
         // Swap the amounts
         // Note: You might want to recalculate the amounts based on the new currency pair
         // or simply swap the display values, depending on your requirements.
-        const tempAmount = amount1;
-        setAmount1(amount2);
-        setAmount2(tempAmount);
+        const tempAmount = amountCurrencyToSell;
+        setAmountCurrencyToSell(amountCurrencyToBuy);
+        setAmountCurrencyToBuy(tempAmount);
     }
 
     function handleAmount1Change(amount1: number) {
         if (!dataRates) return;
-        setAmount2(roundToFour(amount1 * dataRates.rates[currency2] / dataRates.rates[currency1]));
-        setAmount1(amount1);
+        setAmountCurrencyToBuy(roundToFour(amount1 * dataRates.rates[currencyToBuy] / dataRates.rates[currencyToSell]));
+        setAmountCurrencyToSell(amount1);
     }
 
     function handleCurrency1Change(currency1: string) {
         if (!dataRates) return;
-        setAmount2(roundToFour(amount1 * dataRates.rates[currency2] / dataRates.rates[currency1]));
-        setCurrency1(currency1);
-        updateQueryParams(currency1, currency2);
+        setAmountCurrencyToBuy(roundToFour(amountCurrencyToSell * dataRates.rates[currencyToBuy] / dataRates.rates[currency1]));
+        setCurrencyToSell(currency1);
+        updateQueryParams(currency1, currencyToBuy);
     }
 
     function handleAmount2Change(amount2: number) {
         if (!dataRates) return;
-        setAmount1(roundToFour(amount2 * dataRates.rates[currency1] / dataRates.rates[currency2]));
-        setAmount2(amount2);
+        setAmountCurrencyToSell(roundToFour(amount2 * dataRates.rates[currencyToSell] / dataRates.rates[currencyToBuy]));
+        setAmountCurrencyToBuy(amount2);
     }
 
     function handleCurrency2Change(currency2: string) {
         if (!dataRates) return;
-        setAmount1(roundToFour(amount2 * dataRates.rates[currency1] / dataRates.rates[currency2]));
-        setCurrency2(currency2);
-        updateQueryParams(currency1, currency2);
+        setAmountCurrencyToSell(roundToFour(amountCurrencyToBuy * dataRates.rates[currencyToSell] / dataRates.rates[currency2]));
+        setCurrencyToBuy(currency2);
+        updateQueryParams(currencyToSell, currency2);
     }
 
     // Update query params when currencies change
@@ -164,9 +164,9 @@ export const CurrencyExchangeForm = () => {
         <CurrencyExchangeCard>
             <>
                 <CurrencyUniversalInput
-                    amount={amount1}
+                    amount={amountCurrencyToSell}
                     label={`${t('currencyExchangeCard.sellCurrencyLabel')}:`}
-                    currency={currency1}
+                    currency={currencyToSell}
                     onAmountChange={handleAmount1Change}
                     onCurrencyChange={handleCurrency1Change}
                     currencies={supportedCurrencyForInputs}/>
@@ -178,9 +178,9 @@ export const CurrencyExchangeForm = () => {
                     </Tooltip>
                 </div>
                 <CurrencyUniversalInput
-                    amount={amount2}
+                    amount={amountCurrencyToBuy}
                     label={`${t('currencyExchangeCard.buyCurrencyLabel')}:`}
-                    currency={currency2}
+                    currency={currencyToBuy}
                     onAmountChange={handleAmount2Change}
                     onCurrencyChange={handleCurrency2Change}
                     currencies={supportedCurrencyForInputs}

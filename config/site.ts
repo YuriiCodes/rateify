@@ -19,7 +19,7 @@ export const siteConfig = {
     ],
     navMenuItems: [
         {
-            key: "Main",
+            key: "main",
             href: "/",
         },
         {
