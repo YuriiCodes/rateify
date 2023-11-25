@@ -72,8 +72,6 @@ export const CurrencyExchangeForm = () => {
 
         if (query.currencyFrom) {
             if (!isCurrencySupported(supportedCurrencyForInputs, query.currencyFrom as string)) {
-                console.log("supportedCurrencyForInputs", supportedCurrencyForInputs);
-                console.log("query.currencyFrom", query.currencyFrom);
                 setCurrencyToSell(INIT_SELL_CURRENCY);
                 toast.info(t('toasts.info.unsupportedSellCurrency'), {
                     toastId: fromCurrencyNotSupportedToastId,
@@ -110,6 +108,9 @@ export const CurrencyExchangeForm = () => {
         const tempAmount = amountCurrencyToSell;
         setAmountCurrencyToSell(amountCurrencyToBuy);
         setAmountCurrencyToBuy(tempAmount);
+
+        //update the query params:
+        updateQueryParams(currencyToBuy, currencyToSell);
     }
 
     function handleAmount1Change(amount1: number) {

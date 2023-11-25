@@ -60,3 +60,7 @@ To run the linting, run the following commands in your terminal:
 ```bash
 npm run lint
 ```
+
+### Node.js version:
+v18.14.2 and above
+
